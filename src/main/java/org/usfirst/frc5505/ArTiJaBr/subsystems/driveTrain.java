@@ -24,9 +24,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
-
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Ultrasonic;
 
 
 
@@ -48,11 +48,12 @@ public class driveTrain extends Subsystem {
     private CANSparkMax sparkMax4;
     private RobotDrive robotDrive41;
     private DoubleSolenoid shifterSolenoid;
-
     private CANEncoder rightEncoder;
     private CANEncoder leftEncoder;
+    private Ultrasonic leftUltra;
+    private Ultrasonic rightUltra;
 
-
+    public boolean isDriverControlMode = true;
 
     public driveTrain() {
 
@@ -76,6 +77,11 @@ public class driveTrain extends Subsystem {
 
         rightEncoder = new CANEncoder(sparkMax4);
 
+        
+        leftUltra = new Ultrasonic(0,1);
+
+        rightUltra = new Ultrasonic(2,3);
+
         robotDrive41 = new RobotDrive(sparkMax1, sparkMax2,
         sparkMax3, sparkMax4);
         
@@ -86,9 +92,6 @@ public class driveTrain extends Subsystem {
 
         shifterSolenoid = new DoubleSolenoid(0, 0, 1);
             addChild("Climber Solenoid 1", shifterSolenoid);
-
-        
-
 
     }
 
@@ -121,8 +124,10 @@ public class driveTrain extends Subsystem {
     // here. Call these from Commands.
 
     public void driveBase(Joystick stick) {
-        double reduction = 1;
-        robotDrive41.tankDrive(stick.getRawAxis(1)*reduction, stick.getRawAxis(5)*reduction);
+        if (isDriverControlMode = true) {
+            double reduction = 1;
+            robotDrive41.tankDrive(stick.getRawAxis(1)*reduction, stick.getRawAxis(5)*reduction);
+        }
     }
 
     public void shift() {
@@ -136,9 +141,32 @@ public class driveTrain extends Subsystem {
         }
     }
 
-    public void driveStraight(double distance, double speed) {
-        double encoderStartValue = rightEncoder.getPosition();
-
+    public boolean wallAllignAndDrive(double speed) {
+        double difference = leftUltra.getRangeInches() - rightUltra.getRangeInches();
+        if (difference > 1) {
+            // Need to turn right
+            robotDrive41.tankDrive(speed, -speed);
+            return false;
+        } else if (difference < -1) {
+            // Need to turn left
+            robotDrive41.tankDrive(-speed, speed);
+            return false;
+        } else {
+            // Within Margin of Error
+            double averageDistance = (leftUltra.getRangeInches() + rightUltra.getRangeInches()) / 2;
+            if (averageDistance > 5) {
+                // Drive Forward
+                robotDrive41.tankDrive(speed, speed);
+                return false;
+            } else {
+                // Stop
+                robotDrive41.tankDrive(0, 0);
+                isDriverControlMode = true;
+                return true;
+            }
+        }
     }
+
+    
 }
 
