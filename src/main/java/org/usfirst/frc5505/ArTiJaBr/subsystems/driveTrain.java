@@ -28,6 +28,11 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
+
 
 
 
@@ -54,6 +59,12 @@ public class driveTrain extends Subsystem {
     private Ultrasonic rightUltra;
 
     public boolean isDriverControlMode = true;
+    public double X1 = 0;
+    public double X2 = 0;
+    public double Y1 = 0;
+    public double Y2 = 0;
+    public double LineAngle = 0;
+    public double LineLength = 0;
 
     public driveTrain() {
 
@@ -111,6 +122,15 @@ public class driveTrain extends Subsystem {
         // Put code here to be run every loop
         //double rightPos = rightEncoder.getPosition();
         //double leftPos = leftEncoder.getPosition();
+        double midpointX = ((((X2 - X1) / 2)) + X1);
+        double midpointY = ((((Y2 - Y1) / 2)) + Y1);
+        SmartDashboard.putNumber("MidpointX", midpointX);
+        SmartDashboard.putNumber("MidpointY", midpointY);
+        SmartDashboard.putNumber("Line Angle", LineAngle);
+        SmartDashboard.putNumber("X1", X1);
+        SmartDashboard.putNumber("X2", X2);
+        SmartDashboard.putNumber("Y1", Y1);
+        SmartDashboard.putNumber("Y2", Y2);
         SmartDashboard.putNumber("Right Encoder", rightEncoder.getPosition());
         SmartDashboard.putNumber("Left Encoder", leftEncoder.getPosition());
     }
@@ -167,6 +187,30 @@ public class driveTrain extends Subsystem {
         }
     }
 
-    
+    public void alignToLine(double speed) {
+        double midpoint = ((((X2 - X1) / 2)) + X1);
+        SmartDashboard.putNumber("Midpoint", midpoint);
+    }
+
+    //Run by Robot.java to send vars to driveTrain
+    public void getX1(double x1) {
+        X1 = x1;
+    }
+    public void getX2(double x2) {
+        X2 = x2;
+    }
+    public void getY1(double y1) {
+        Y1 = y1;
+    }
+    public void getY2(double y2) {
+        Y2 = y2;
+    }
+    public void getLineAngle(double lineAngle) {
+        LineAngle = lineAngle;
+    }
+    public void getLineLength(double lineLenght) {
+        LineLength = lineLenght;
+    }
+    /////////////////////////////////////////////
 }
 
