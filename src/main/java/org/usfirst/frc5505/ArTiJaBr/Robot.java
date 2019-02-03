@@ -11,6 +11,7 @@
 
 package org.usfirst.frc5505.ArTiJaBr;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -94,8 +95,8 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putData("Auto mode", chooser);
 
-        CameraServer.getInstance().startAutomaticCapture("Camera 1", 0);
-        
+        UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture("Camera 1", 0);
+        cam1.setResolution(320, 240);
     }
 
     /**
@@ -134,8 +135,10 @@ public class Robot extends TimedRobot {
             Robot.driveTrain.getY2(y2);
             Robot.driveTrain.getLineAngle(lineAngle);
             Robot.driveTrain.getLineLength(lenght);
+            Robot.driveTrain.areThereLines(true);
             SmartDashboard.putBoolean("Are There Lines", true);
         } catch(Exception e) {
+            Robot.driveTrain.areThereLines(false);
             SmartDashboard.putBoolean("Are There Lines", false);
         }
         Scheduler.getInstance().run();
@@ -178,8 +181,10 @@ public class Robot extends TimedRobot {
             Robot.driveTrain.getY2(y2);
             Robot.driveTrain.getLineAngle(lineAngle);
             Robot.driveTrain.getLineLength(lenght);
+            Robot.driveTrain.areThereLines(true);
             SmartDashboard.putBoolean("Are There Lines", true);
         } catch(Exception e) {
+            Robot.driveTrain.areThereLines(false);
             SmartDashboard.putBoolean("Are There Lines", false);
         }
         Scheduler.getInstance().run();
@@ -226,8 +231,10 @@ public class Robot extends TimedRobot {
             Robot.driveTrain.getY2(y2);
             Robot.driveTrain.getLineAngle(lineAngle);
             Robot.driveTrain.getLineLength(lenght);
+            Robot.driveTrain.areThereLines(true);
             SmartDashboard.putBoolean("Are There Lines", true);
         } catch(Exception e) {
+            Robot.driveTrain.areThereLines(false);
             SmartDashboard.putBoolean("Are There Lines", false);
         }
         Scheduler.getInstance().run();

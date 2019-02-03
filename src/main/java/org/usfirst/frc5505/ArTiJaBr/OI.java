@@ -71,8 +71,8 @@ public class OI {
         SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
         SmartDashboard.putData("Drive Base", new DriveBase());
         SmartDashboard.putData("shift", new shift());
-        SmartDashboard.putData("driveStraight", new driveStraight());
-        SmartDashboard.putData("turnToAngle", new turnToAngle());
+        SmartDashboard.putData("driveStraight", new driveStraight(0, 0));
+        SmartDashboard.putData("turnToAngle", new turnToAngle(0, 0));
         SmartDashboard.putData("wallAlignAndDrive", new wallAlignAndDrive());
         SmartDashboard.putData("returnDriverControl", new returnDriverControl());
         SmartDashboard.putData("alignToLine", new alignToLine());
