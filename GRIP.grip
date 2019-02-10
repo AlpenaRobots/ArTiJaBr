@@ -31,7 +31,7 @@
       <grip:Input step="3" socket="2">
         <value>
           <int>0</int>
-          <double>38.787878787878796</double>
+          <double>44.84848484848485</double>
         </value>
       </grip:Input>
       <grip:Output step="3" socket="0" previewed="true"/>
@@ -63,20 +63,20 @@
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="true"/>
-      <grip:Input step="2" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="true"/>
-      <grip:Input step="0" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
       <grip:Output step="3" socket="0" previewed="true"/>
       <grip:Input step="4" socket="0"/>
     </grip:Connection>
     <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
       <grip:Output step="2" socket="0" previewed="true"/>
       <grip:Input step="3" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
+      <grip:Input step="0" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="0" socket="0" previewed="true"/>
@@ -95,9 +95,9 @@
   <codeGenerationSettings>
     <language>Java</language>
     <className>GripPipeline</className>
-    <implementWpilibPipeline>false</implementWpilibPipeline>
+    <implementWpilibPipeline>true</implementWpilibPipeline>
     <saveDir>C:\Users\Robotics\GRIP</saveDir>
-    <packageName></packageName>
+    <packageName>gripvision</packageName>
     <moduleName>grip</moduleName>
   </codeGenerationSettings>
 </grip:Pipeline>
