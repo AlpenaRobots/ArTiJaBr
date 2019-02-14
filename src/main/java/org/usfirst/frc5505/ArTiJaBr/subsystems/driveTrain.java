@@ -12,6 +12,7 @@
 package org.usfirst.frc5505.ArTiJaBr.subsystems;
 
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -53,6 +54,7 @@ public class driveTrain extends Subsystem {
     private CANSparkMax sparkMax3;
     private CANSparkMax sparkMax4;
     private RobotDrive robotDrive41;
+    private WPI_TalonSRX talonSRX5;
     private DoubleSolenoid shifterSolenoid;
     private CANEncoder rightEncoder;
     private CANEncoder leftEncoder;
@@ -88,7 +90,8 @@ public class driveTrain extends Subsystem {
         sparkMax4 = new CANSparkMax(4, MotorType.kBrushless);
         
         
-        
+        talonSRX5 = new WPI_TalonSRX(5);
+
         leftEncoder = new CANEncoder(sparkMax1);
 
         rightEncoder = new CANEncoder(sparkMax4);
@@ -141,6 +144,13 @@ public class driveTrain extends Subsystem {
         if (isDriverControlMode = true) {
             double reduction = 1;
             robotDrive41.tankDrive(stick.getRawAxis(1)*reduction, stick.getRawAxis(5)*reduction);
+            if (stick.getRawAxis(2) > .01 && stick.getRawAxis(3) <= .01) {
+                talonSRX5.set(-stick.getRawAxis(2));
+            } else if (stick.getRawAxis(3) > .01 && stick.getRawAxis(2) <= .01) {
+                talonSRX5.set(stick.getRawAxis(3));
+            } else {
+                talonSRX5.set(0);
+            }
         }
     }
 
